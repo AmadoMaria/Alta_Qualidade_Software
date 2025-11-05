@@ -13,7 +13,9 @@ clientes = [
     {"nome": "Carlos", "email": "carlos@petrobahia.com", "cnpj": "456"},
 ]
 
-# print("==== Início processamento PetroBahia ====")
+if __name__ == "__main__":
+    
+    print("==== Início processamento PetroBahia ====")
 
 # for c in clientes:
 #     ok = cadastrar_cliente(c)

@@ -9,7 +9,6 @@ class PedidoService:
     #         v = processar_pedido(p)
     #         valores.append(v)
     #         print("pedido:", p, "-- valor final:", v)
-
     #     return valores = []
     
     def processar_pedido(p):
