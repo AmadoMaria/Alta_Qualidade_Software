@@ -13,20 +13,24 @@ clientes = [
     {"nome": "Carlos", "email": "carlos@petrobahia.com", "cnpj": "456"},
 ]
 
-print("==== Início processamento PetroBahia ====")
+if __name__ == "__main__":
+    
+    print("==== Início processamento PetroBahia ====")
 
-for c in clientes:
-    ok = cadastrar_cliente(c)
-    if ok:
-        print("cliente ok:", c["nome"])
-    else:
-        print("cliente com problema:", c)
+# for c in clientes:
+#     ok = cadastrar_cliente(c)
+#     if ok:
+#         print("cliente ok:", c["nome"])
+#     else:
+#         print("cliente com problema:", c)
+ 
 
-valores = []
-for p in pedidos:
-    v = processar_pedido(p)
-    valores.append(v)
-    print("pedido:", p, "-- valor final:", v)
+# for p in pedidos:
+#     v = processar_pedido(p)
+#     valores.append(v)
+#     print("pedido:", p, "-- valor final:", v)
 
-print("TOTAL =", sum(valores))
-print("==== Fim processamento PetroBahia ====")
+# return valores = []
+
+# print("TOTAL =", sum(valores))
+# print("==== Fim processamento PetroBahia ====")
