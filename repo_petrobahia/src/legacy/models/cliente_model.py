@@ -5,4 +5,3 @@ class Cliente:
         self.email_cliente = email_cliente
         self.cnpj_cliente = cnpj_cliente
         self.pedidos = []
-

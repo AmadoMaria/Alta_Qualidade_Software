@@ -123,9 +123,7 @@ class PetroBahiaCLI:
             if response.success:
                 totals.append(response.total)
                 cupom_text = (
-                    f" (Coupon: {pedido_data['cupom']})"
-                    if pedido_data["cupom"]
-                    else ""
+                    f" (Coupon: {pedido_data['cupom']})" if pedido_data["cupom"] else ""
                 )
                 print(
                     f"✓ Order {pedido_data['id']}: "

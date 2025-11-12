@@ -76,13 +76,9 @@ class ProcessPedidoUseCase:
                 message=str(e),
             )
 
-        price = self._pricing_service.calculate_price(
-            tipo_produto, request.quantidade
-        )
+        price = self._pricing_service.calculate_price(tipo_produto, request.quantidade)
 
-        price = self._discount_service.apply_coupon(
-            price, request.cupom, tipo_produto
-        )
+        price = self._discount_service.apply_coupon(price, request.cupom, tipo_produto)
 
         final_price = self._rounding_service.round_price(price, tipo_produto)
 

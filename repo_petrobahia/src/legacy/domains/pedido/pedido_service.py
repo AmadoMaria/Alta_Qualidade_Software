@@ -1,16 +1,17 @@
 from legacy.preco_calculadora import calcular_preco
 
+
 class PedidoService:
     def __init__(self):
         return
-    
+
     # def processar_pedidos():
     #     for p in pedidos:
     #         v = processar_pedido(p)
     #         valores.append(v)
     #         print("pedido:", p, "-- valor final:", v)
     #     return valores = []
-    
+
     def processar_pedido(p):
         prod = p.get("produto")
         qtd = p.get("qtd")
@@ -25,7 +26,9 @@ class PedidoService:
             print("algo deu errado, preco negativo")
             preco = 0
 
-        if cupom == "MEGA10": #Não respeita o SOLID -> Lógica de cupons + seleção de produto +
+        if (
+            cupom == "MEGA10"
+        ):  # Não respeita o SOLID -> Lógica de cupons + seleção de produto +
             preco = preco - (preco * 0.1)
         else:
             if cupom == "NOVO5":

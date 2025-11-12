@@ -5,6 +5,7 @@ BASES = {
     "lubrificante": 25.0,
 }
 
+
 def calcular_preco(tipo, qtd):
     if tipo == "diesel":
         if qtd > 1000:

@@ -5,4 +5,3 @@ class Produto:
         self.tipo = tipo
         self.preco = preco
         self.pedidos = []
-        

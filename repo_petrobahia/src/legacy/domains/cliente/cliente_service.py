@@ -2,6 +2,7 @@ import re
 
 REG_EMAIL = "^[^@\s]+@[^@\s]+\.[^@\s]+$"
 
+
 class ClienteService:
 
     def __init__(self):

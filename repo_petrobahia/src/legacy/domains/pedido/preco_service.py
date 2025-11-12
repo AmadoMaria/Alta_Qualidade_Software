@@ -5,6 +5,7 @@ BASES = {
     "lubrificante": 25.0,
 }
 
+
 class PrecoService:
 
     def __init__(self):

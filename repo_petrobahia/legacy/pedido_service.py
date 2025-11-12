@@ -1,5 +1,6 @@
 from legacy.preco_calculadora import calcular_preco
 
+
 def processar_pedido(p):
     prod = p.get("produto")
     qtd = p.get("qtd")
@@ -14,7 +15,9 @@ def processar_pedido(p):
         print("algo deu errado, preco negativo")
         preco = 0
 
-    if cupom == "MEGA10": #Não respeita o SOLID -> Lógica de cupons + seleção de produto +
+    if (
+        cupom == "MEGA10"
+    ):  # Não respeita o SOLID -> Lógica de cupons + seleção de produto +
         preco = preco - (preco * 0.1)
     else:
         if cupom == "NOVO5":
