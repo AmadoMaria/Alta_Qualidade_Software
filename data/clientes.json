@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "nome": "TransLog",
+    "email": "contato@translog.com.br",
+    "cnpj": "12345678000190"
+  },
+  {
+    "id": "2",
+    "nome": "MoveMais",
+    "email": "vendas@movemais.com",
+    "cnpj": "98765432000111"
+  },
+  {
+    "id": "3",
+    "nome": "EcoFrota",
+    "email": "suporte@ecofrota.com.br",
+    "cnpj": "11223344000155"
+  },
+  {
+    "id": "4",
+    "nome": "PetroPark",
+    "email": "comercial@petropark.com",
+    "cnpj": "55667788000199"
+  }
+]

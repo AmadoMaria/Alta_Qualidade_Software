@@ -31,9 +31,7 @@ class RegisterClienteUseCase:
         self._cliente_repository = cliente_repository
         self._notification_service = notification_service
 
-    def execute(
-        self, request: RegisterClienteRequest
-    ) -> RegisterClienteResponse:
+    def execute(self, request: RegisterClienteRequest) -> RegisterClienteResponse:
         try:
             email = Email(request.email)
         except ValueError as e:

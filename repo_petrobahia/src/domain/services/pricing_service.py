@@ -10,9 +10,7 @@ class PricingService:
         TipoProduto.LUBRIFICANTE: 25.00,
     }
 
-    def calculate_price(
-        self, tipo_produto: TipoProduto, quantidade: int
-    ) -> float:
+    def calculate_price(self, tipo_produto: TipoProduto, quantidade: int) -> float:
         if quantidade <= 0:
             raise ValueError("Quantity must be positive")
 
@@ -31,25 +29,19 @@ class PricingService:
 
         return total
 
-    def _apply_diesel_discount(
-        self, total: float, quantidade: int
-    ) -> float:
+    def _apply_diesel_discount(self, total: float, quantidade: int) -> float:
         if quantidade > 1000:
             return total * 0.9
         elif quantidade > 500:
             return total * 0.95
         return total
 
-    def _apply_gasolina_discount(
-        self, total: float, quantidade: int
-    ) -> float:
+    def _apply_gasolina_discount(self, total: float, quantidade: int) -> float:
         if quantidade > 200:
             return total - 100.00
         return total
 
-    def _apply_etanol_discount(
-        self, total: float, quantidade: int
-    ) -> float:
+    def _apply_etanol_discount(self, total: float, quantidade: int) -> float:
         if quantidade > 80:
             return total * 0.97
         return total

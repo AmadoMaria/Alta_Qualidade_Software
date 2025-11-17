@@ -1,0 +1,30 @@
+[
+  {
+    "id": "ORD001",
+    "cliente_id": "1",
+    "tipo_produto": "diesel",
+    "quantidade": 1200,
+    "cupom": "MEGA10"
+  },
+  {
+    "id": "ORD002",
+    "cliente_id": "2",
+    "tipo_produto": "gasolina",
+    "quantidade": 300,
+    "cupom": null
+  },
+  {
+    "id": "ORD003",
+    "cliente_id": "3",
+    "tipo_produto": "etanol",
+    "quantidade": 50,
+    "cupom": "NOVO5"
+  },
+  {
+    "id": "ORD004",
+    "cliente_id": "4",
+    "tipo_produto": "lubrificante",
+    "quantidade": 12,
+    "cupom": "LUB2"
+  }
+]
