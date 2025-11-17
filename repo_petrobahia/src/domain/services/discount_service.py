@@ -1,7 +1,7 @@
-
 from typing import Optional
 
 from domain.entities.produto import TipoProduto
+
 
 class DiscountService:
     def apply_coupon(

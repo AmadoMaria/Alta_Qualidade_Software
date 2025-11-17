@@ -1,4 +1,3 @@
-
 from domain.entities.produto import TipoProduto
 
 

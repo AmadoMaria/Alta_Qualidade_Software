@@ -1,4 +1,3 @@
-
 from domain.entities.produto import TipoProduto
 
 
@@ -7,4 +6,4 @@ class RoundingService:
         if tipo_produto == TipoProduto.DIESEL:
             return round(price, 0)
 
-        return round(price, 2) 
+        return round(price, 2)
