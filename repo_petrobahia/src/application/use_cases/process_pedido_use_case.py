@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from decimal import Decimal
 from typing import Optional
 
 from domain.entities.pedido import Pedido
@@ -24,7 +23,7 @@ class ProcessPedidoRequest:
 class ProcessPedidoResponse:
     success: bool
     message: str
-    total: Optional[Decimal] = None
+    total: Optional[float] = None
     pedido: Optional[Pedido] = None
 
 

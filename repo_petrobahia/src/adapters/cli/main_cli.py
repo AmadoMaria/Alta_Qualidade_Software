@@ -1,5 +1,3 @@
-from decimal import Decimal
-
 from adapters.notifications.console_notification import ConsoleNotification
 from adapters.repositories.json_cliente_repository import (
     JsonClienteRepository,

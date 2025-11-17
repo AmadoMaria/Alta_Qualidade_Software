@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from enum import Enum
-from decimal import Decimal
 
 
 class TipoProduto(Enum):
@@ -13,8 +12,8 @@ class TipoProduto(Enum):
 @dataclass(frozen=True)
 class Produto:
     tipo: TipoProduto
-    preco_base: Decimal
+    preco_base: float
 
     def __post_init__(self) -> None:
-        if self.preco_base < Decimal("0"):
+        if self.preco_base < 0:
             raise ValueError("Product base price cannot be negative")
