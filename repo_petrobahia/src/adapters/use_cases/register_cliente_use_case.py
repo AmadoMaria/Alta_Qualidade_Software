@@ -10,7 +10,6 @@ from ports.notification_port import NotificationPort
 
 @dataclass
 class RegisterClienteRequest:
-    id: str
     nome: str
     email: str
     cnpj: str

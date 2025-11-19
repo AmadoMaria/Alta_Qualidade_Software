@@ -33,25 +33,21 @@ class PetroBahiaCLI:
 
         clientes_data = [
             {
-                "id": "1",
                 "nome": "TransLog",
                 "email": "contato@translog.com.br",
                 "cnpj": "12345678000190",
             },
             {
-                "id": "2",
                 "nome": "MoveMais",
                 "email": "vendas@movemais.com",
                 "cnpj": "98765432000111",
             },
             {
-                "id": "3",
                 "nome": "EcoFrota",
                 "email": "suporte@ecofrota.com.br",
                 "cnpj": "11223344000155",
             },
             {
-                "id": "4",
                 "nome": "PetroPark",
                 "email": "comercial@petropark.com",
                 "cnpj": "55667788000199",
@@ -60,15 +56,16 @@ class PetroBahiaCLI:
 
         print("Registering customers...")
         print("-" * 60)
+        registered_clientes = []
         for cliente_data in clientes_data:
             request = RegisterClienteRequest(
-                id=cliente_data["id"],
                 nome=cliente_data["nome"],
                 email=cliente_data["email"],
                 cnpj=cliente_data["cnpj"],
             )
             response = self._register_cliente_use_case.execute(request)
             if response.success:
+                registered_clientes.append(response.cliente)
                 print(f"✓ {response.cliente.nome} registered successfully")
             else:
                 print(f"✗ Failed: {response.message}")
@@ -80,28 +77,28 @@ class PetroBahiaCLI:
         pedidos_data = [
             {
                 "id": "ORD001",
-                "cliente_id": "1",
+                "cliente_id": registered_clientes[0].id,
                 "tipo_produto": "diesel",
                 "quantidade": 1200,
                 "cupom": Cupom.MEGA10.value.codigo,
             },
             {
                 "id": "ORD002",
-                "cliente_id": "2",
+                "cliente_id": registered_clientes[1].id,
                 "tipo_produto": "gasolina",
                 "quantidade": 300,
                 "cupom": None,
             },
             {
                 "id": "ORD003",
-                "cliente_id": "3",
+                "cliente_id": registered_clientes[2].id,
                 "tipo_produto": "etanol",
                 "quantidade": 50,
                 "cupom": Cupom.NOVO5.value.codigo,
             },
             {
                 "id": "ORD004",
-                "cliente_id": "4",
+                "cliente_id": registered_clientes[3].id,
                 "tipo_produto": "lubrificante",
                 "quantidade": 12,
                 "cupom": Cupom.LUB2.value.codigo,
