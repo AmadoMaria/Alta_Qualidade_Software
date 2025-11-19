@@ -1,26 +1,30 @@
-from decimal import Decimal
 from typing import Optional
 
+from domain.entities.cupom import Cupom
 from domain.entities.produto import TipoProduto
 
 
 class DiscountService:
     def apply_coupon(
         self,
-        price: Decimal,
+        price: float,
         cupom: Optional[str],
         tipo_produto: TipoProduto,
-    ) -> Decimal:
+    ) -> float:
         if not cupom:
             return price
 
         cupom_upper = cupom.upper()
 
-        if cupom_upper == "MEGA10":
-            return price * Decimal("0.90")
-        elif cupom_upper == "NOVO5":
-            return price * Decimal("0.95")
-        elif cupom_upper == "LUB2" and tipo_produto == TipoProduto.LUBRIFICANTE:
-            return price - Decimal("2.00")
+        for cupom_enum in Cupom:
+            cupom_data = cupom_enum.value
+            if cupom_data.codigo == cupom_upper:
+                if cupom_data.produto_restrito and cupom_data.produto_restrito != tipo_produto:
+                    return price
+
+                if cupom_data.tipo_desconto == "percentual":
+                    return price * (1 - cupom_data.valor_desconto)
+                elif cupom_data.tipo_desconto == "fixo":
+                    return price - cupom_data.valor_desconto
 
         return price

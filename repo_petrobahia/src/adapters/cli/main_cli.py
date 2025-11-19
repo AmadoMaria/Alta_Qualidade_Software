@@ -1,16 +1,15 @@
-from decimal import Decimal
-
 from adapters.notifications.console_notification import ConsoleNotification
 from adapters.repositories.json_cliente_repository import (
     JsonClienteRepository,
 )
 from adapters.repositories.json_pedido_repository import JsonPedidoRepository
-from application.use_cases import (
+from adapters.use_cases import (
     ProcessPedidoRequest,
     ProcessPedidoUseCase,
     RegisterClienteRequest,
     RegisterClienteUseCase,
 )
+from domain.entities.cupom import Cupom
 
 
 class PetroBahiaCLI:
@@ -84,7 +83,7 @@ class PetroBahiaCLI:
                 "cliente_id": "1",
                 "tipo_produto": "diesel",
                 "quantidade": 1200,
-                "cupom": "MEGA10",
+                "cupom": Cupom.MEGA10.value.codigo,
             },
             {
                 "id": "ORD002",
@@ -98,14 +97,14 @@ class PetroBahiaCLI:
                 "cliente_id": "3",
                 "tipo_produto": "etanol",
                 "quantidade": 50,
-                "cupom": "NOVO5",
+                "cupom": Cupom.NOVO5.value.codigo,
             },
             {
                 "id": "ORD004",
                 "cliente_id": "4",
                 "tipo_produto": "lubrificante",
                 "quantidade": 12,
-                "cupom": "LUB2",
+                "cupom": Cupom.LUB2.value.codigo,
             },
         ]
 
