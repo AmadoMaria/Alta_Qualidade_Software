@@ -1,5 +1,6 @@
-from dataclasses import dataclass
 from enum import Enum
+
+from pydantic import BaseModel, field_validator
 
 
 class TipoProduto(Enum):
@@ -9,11 +10,16 @@ class TipoProduto(Enum):
     LUBRIFICANTE = "lubrificante"
 
 
-@dataclass(frozen=True)
-class Produto:
+class Produto(BaseModel):
     tipo: TipoProduto
     preco_base: float
 
-    def __post_init__(self) -> None:
-        if self.preco_base < 0:
+    model_config = {
+        "frozen": True,
+    }
+
+    @field_validator("preco_base")
+    def validar_preco_base(cls, value: float) -> float:
+        if value < 0:
             raise ValueError("Product base price cannot be negative")
+        return value

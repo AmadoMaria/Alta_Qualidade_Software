@@ -4,12 +4,14 @@
 
 ## TODO:
 
-- move applications/use_cases to domain
-- use cases will merge into services
 - tests folder will test services
 - use typing required... in entities
 - translate everything to english
-- fix code execution
+- fix flake8 warnings
+- implement pre commit
+- fix all the test by applying a round to the calculation result
+- implement custom errors with error codes
+- put final price inside the pedido
 
 ## 🎯 Objetivos do Projeto
 
