@@ -11,8 +11,6 @@
 - cupom name should be enum
 - translate everything to english
 - fix code execution
-- to add output data to .gitignore
-- to delete client.txt
 
 ## 🎯 Objetivos do Projeto
 
