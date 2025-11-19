@@ -8,7 +8,6 @@
 - use cases will merge into services
 - tests folder will test services
 - use typing required... in entities
-- cupom name should be enum
 - translate everything to english
 - fix code execution
 
