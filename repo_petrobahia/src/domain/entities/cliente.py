@@ -3,6 +3,7 @@ from typing import ClassVar
 import re
 from uuid import uuid4
 
+
 class Cliente(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid4()))
     nome: str
@@ -24,7 +25,7 @@ class Cliente(BaseModel):
         if len(cnpj) != 14:
             raise ValueError("CNPJ deve conter 14 dígitos")
         return cnpj
-    
+
     @field_validator("email")
     def validar_email(cls, value: str) -> str:
         if not value:
@@ -32,4 +33,3 @@ class Cliente(BaseModel):
         if not cls.EMAIL_PATTERN.match(value):
             raise ValueError(f"Invalid email format: {value}")
         return value
-

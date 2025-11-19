@@ -31,24 +31,19 @@ class RegisterClienteUseCase:
     ):
         self._client_service = ClientService(cliente_repository, notification_service)
 
-
     def execute(self, request: RegisterClienteRequest) -> RegisterClienteResponse:
         try:
-            cliente = self._client_service.register_client(request.nome, request.email, request.cnpj)
+            cliente = self._client_service.register_client(
+                request.nome, request.email, request.cnpj
+            )
             return RegisterClienteResponse(
-            success=True,
-            message="Customer registered successfully",
-            cliente=cliente,
-        )
+                success=True,
+                message="Customer registered successfully",
+                cliente=cliente,
+            )
         except ValueError as e:
-            #TODO: Add custom error code to response
+            # TODO: Add custom error code to response
             return RegisterClienteResponse(
                 success=False,
                 message="Failed to register customer",
             )
-
-
-
-        
-
-
