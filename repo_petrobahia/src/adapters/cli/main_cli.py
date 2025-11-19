@@ -3,7 +3,7 @@ from adapters.repositories.json_cliente_repository import (
     JsonClienteRepository,
 )
 from adapters.repositories.json_pedido_repository import JsonPedidoRepository
-from application.use_cases import (
+from adapters.use_cases import (
     ProcessPedidoRequest,
     ProcessPedidoUseCase,
     RegisterClienteRequest,
