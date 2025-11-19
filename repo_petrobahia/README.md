@@ -4,8 +4,6 @@
 
 ## TODO:
 
-- move applications/use_cases to domain
-- use cases will merge into services
 - tests folder will test services
 - use typing required... in entities
 - translate everything to english
