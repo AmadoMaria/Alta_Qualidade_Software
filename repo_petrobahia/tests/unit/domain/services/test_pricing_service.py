@@ -1,10 +1,10 @@
 import pytest
-from domain.services.pricing_service import PricingService
+
 from domain.entities.produto import TipoProduto
+from domain.services.pricing_service import PricingService
 
 
 class TestPricingService:
-
     def setup_method(self):
         self.service = PricingService()
 
@@ -102,16 +102,19 @@ class TestPricingService:
         expected = 3.99
         assert result == expected
 
-    @pytest.mark.parametrize("tipo_produto,quantidade,expected", [
-        (TipoProduto.DIESEL, 100, 3.99 * 100),
-        (TipoProduto.DIESEL, 501, (3.99 * 501) * 0.95),
-        (TipoProduto.DIESEL, 1001, (3.99 * 1001) * 0.9),
-        (TipoProduto.GASOLINA, 100, 5.19 * 100),
-        (TipoProduto.GASOLINA, 201, (5.19 * 201) - 100.00),
-        (TipoProduto.ETANOL, 50, 3.59 * 50),
-        (TipoProduto.ETANOL, 81, (3.59 * 81) * 0.97),
-        (TipoProduto.LUBRIFICANTE, 10, 25.00 * 10),
-    ])
+    @pytest.mark.parametrize(
+        "tipo_produto,quantidade,expected",
+        [
+            (TipoProduto.DIESEL, 100, 3.99 * 100),
+            (TipoProduto.DIESEL, 501, (3.99 * 501) * 0.95),
+            (TipoProduto.DIESEL, 1001, (3.99 * 1001) * 0.9),
+            (TipoProduto.GASOLINA, 100, 5.19 * 100),
+            (TipoProduto.GASOLINA, 201, (5.19 * 201) - 100.00),
+            (TipoProduto.ETANOL, 50, 3.59 * 50),
+            (TipoProduto.ETANOL, 81, (3.59 * 81) * 0.97),
+            (TipoProduto.LUBRIFICANTE, 10, 25.00 * 10),
+        ],
+    )
     def test_calculate_price_parametrized(self, tipo_produto, quantidade, expected):
         result = self.service.calculate_price(tipo_produto, quantidade)
         assert result == expected

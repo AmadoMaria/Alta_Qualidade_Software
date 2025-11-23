@@ -1,16 +1,16 @@
 import sys
 from pathlib import Path
+from unittest.mock import Mock
+
+import pytest
+
+from domain.entities.cliente import Cliente
+from domain.entities.pedido import Pedido
+from domain.entities.produto import Produto, TipoProduto
 
 repo_root = Path(__file__).parent.parent
 src_path = repo_root / "src"
 sys.path.insert(0, str(src_path))
-
-import pytest
-from unittest.mock import Mock
-from domain.entities.cliente import Cliente
-from domain.entities.pedido import Pedido
-from domain.entities.produto import TipoProduto, Produto
-from domain.entities.cupom import Cupom
 
 
 @pytest.fixture
@@ -19,7 +19,7 @@ def valid_cliente():
         id="test-client-123",
         nome="Empresa Teste Ltda",
         email="contato@empresa.com",
-        cnpj="12345678901234"
+        cnpj="12345678901234",
     )
 
 
@@ -30,7 +30,7 @@ def valid_pedido():
         cliente_id="test-client-123",
         tipo_produto=TipoProduto.DIESEL,
         quantidade=100,
-        cupom=None
+        cupom=None,
     )
 
 

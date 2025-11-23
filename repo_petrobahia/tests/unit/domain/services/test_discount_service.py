@@ -1,10 +1,10 @@
 import pytest
-from domain.services.discount_service import DiscountService
+
 from domain.entities.produto import TipoProduto
+from domain.services.discount_service import DiscountService
 
 
 class TestDiscountService:
-
     def setup_method(self):
         self.service = DiscountService()
 
@@ -46,7 +46,9 @@ class TestDiscountService:
         assert result == 1000.0
 
     def test_apply_coupon_lub2_restricted_to_lubrificante(self):
-        result_lubrificante = self.service.apply_coupon(100.0, "LUB2", TipoProduto.LUBRIFICANTE)
+        result_lubrificante = self.service.apply_coupon(
+            100.0, "LUB2", TipoProduto.LUBRIFICANTE
+        )
         assert result_lubrificante == 98.0
 
         result_diesel = self.service.apply_coupon(100.0, "LUB2", TipoProduto.DIESEL)
@@ -104,34 +106,45 @@ class TestDiscountService:
         discount = original - result
         assert discount == 2.0
 
-    @pytest.mark.parametrize("coupon_code,expected_discount_multiplier", [
-        ("MEGA10", 0.9),
-        ("mega10", 0.9),
-        ("MEGA10", 0.9),
-        ("MeGa10", 0.9),
-    ])
-    def test_apply_coupon_mega10_case_variations(self, coupon_code, expected_discount_multiplier):
+    @pytest.mark.parametrize(
+        "coupon_code,expected_discount_multiplier",
+        [
+            ("MEGA10", 0.9),
+            ("mega10", 0.9),
+            ("MEGA10", 0.9),
+            ("MeGa10", 0.9),
+        ],
+    )
+    def test_apply_coupon_mega10_case_variations(
+        self, coupon_code, expected_discount_multiplier
+    ):
         result = self.service.apply_coupon(1000.0, coupon_code, TipoProduto.DIESEL)
         expected = 1000.0 * expected_discount_multiplier
         assert result == expected
 
-    @pytest.mark.parametrize("tipo_produto", [
-        TipoProduto.DIESEL,
-        TipoProduto.GASOLINA,
-        TipoProduto.ETANOL,
-        TipoProduto.LUBRIFICANTE,
-    ])
+    @pytest.mark.parametrize(
+        "tipo_produto",
+        [
+            TipoProduto.DIESEL,
+            TipoProduto.GASOLINA,
+            TipoProduto.ETANOL,
+            TipoProduto.LUBRIFICANTE,
+        ],
+    )
     def test_apply_coupon_mega10_all_products(self, tipo_produto):
         result = self.service.apply_coupon(1000.0, "MEGA10", tipo_produto)
         assert result == 900.0
 
-    @pytest.mark.parametrize("invalid_code", [
-        "INVALID",
-        "NOTEXIST",
-        "12345",
-        "MEGA",
-        "MEGA11",
-    ])
+    @pytest.mark.parametrize(
+        "invalid_code",
+        [
+            "INVALID",
+            "NOTEXIST",
+            "12345",
+            "MEGA",
+            "MEGA11",
+        ],
+    )
     def test_apply_coupon_invalid_codes(self, invalid_code):
         result = self.service.apply_coupon(1000.0, invalid_code, TipoProduto.DIESEL)
         assert result == 1000.0

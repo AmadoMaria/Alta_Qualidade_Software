@@ -1,10 +1,10 @@
 import pytest
-from domain.services.rounding_service import RoundingService
+
 from domain.entities.produto import TipoProduto
+from domain.services.rounding_service import RoundingService
 
 
 class TestRoundingService:
-
     def setup_method(self):
         self.service = RoundingService()
 
@@ -112,36 +112,45 @@ class TestRoundingService:
         result = self.service.round_price(999999.999, TipoProduto.GASOLINA)
         assert result == 1000000.0
 
-    @pytest.mark.parametrize("price,expected", [
-        (100.0, 100.0),
-        (100.4, 100.0),
-        (100.5, 100.0),
-        (100.6, 101.0),
-        (99.5, 100.0),
-        (99.4, 99.0),
-    ])
+    @pytest.mark.parametrize(
+        "price,expected",
+        [
+            (100.0, 100.0),
+            (100.4, 100.0),
+            (100.5, 100.0),
+            (100.6, 101.0),
+            (99.5, 100.0),
+            (99.4, 99.0),
+        ],
+    )
     def test_round_price_diesel_various_values(self, price, expected):
         result = self.service.round_price(price, TipoProduto.DIESEL)
         assert result == expected
 
-    @pytest.mark.parametrize("price,expected", [
-        (100.001, 100.0),
-        (100.004, 100.0),
-        (100.005, 100.01),
-        (100.006, 100.01),
-        (100.554, 100.55),
-        (100.555, 100.56),
-        (100.556, 100.56),
-    ])
+    @pytest.mark.parametrize(
+        "price,expected",
+        [
+            (100.001, 100.0),
+            (100.004, 100.0),
+            (100.005, 100.01),
+            (100.006, 100.01),
+            (100.554, 100.55),
+            (100.555, 100.56),
+            (100.556, 100.56),
+        ],
+    )
     def test_round_price_gasolina_various_values(self, price, expected):
         result = self.service.round_price(price, TipoProduto.GASOLINA)
         assert result == expected
 
-    @pytest.mark.parametrize("tipo_produto", [
-        TipoProduto.GASOLINA,
-        TipoProduto.ETANOL,
-        TipoProduto.LUBRIFICANTE,
-    ])
+    @pytest.mark.parametrize(
+        "tipo_produto",
+        [
+            TipoProduto.GASOLINA,
+            TipoProduto.ETANOL,
+            TipoProduto.LUBRIFICANTE,
+        ],
+    )
     def test_round_price_non_diesel_products_use_two_decimals(self, tipo_produto):
         result = self.service.round_price(123.456, tipo_produto)
         assert result == 123.46

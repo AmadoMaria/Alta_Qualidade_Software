@@ -1,11 +1,12 @@
-import pytest
 from unittest.mock import Mock
-from domain.services.client_service import ClientService
+
+import pytest
+
 from domain.entities.cliente import Cliente
+from domain.services.client_service import ClientService
 
 
 class TestClientService:
-
     def setup_method(self):
         self.mock_repository = Mock()
         self.mock_notification = Mock()
@@ -15,9 +16,7 @@ class TestClientService:
         self.mock_repository.save.return_value = True
 
         cliente = self.service.register_client(
-            name="Empresa Teste",
-            email="contato@empresa.com",
-            cnpj="12345678901234"
+            name="Empresa Teste", email="contato@empresa.com", cnpj="12345678901234"
         )
 
         assert cliente.nome == "Empresa Teste"
@@ -29,9 +28,7 @@ class TestClientService:
         self.mock_repository.save.return_value = True
 
         self.service.register_client(
-            name="Empresa Teste",
-            email="contato@empresa.com",
-            cnpj="12345678901234"
+            name="Empresa Teste", email="contato@empresa.com", cnpj="12345678901234"
         )
 
         self.mock_repository.save.assert_called_once()
@@ -42,9 +39,7 @@ class TestClientService:
         self.mock_repository.save.return_value = True
 
         cliente = self.service.register_client(
-            name="Empresa Teste",
-            email="contato@empresa.com",
-            cnpj="12345678901234"
+            name="Empresa Teste", email="contato@empresa.com", cnpj="12345678901234"
         )
 
         self.mock_notification.send_welcome_email.assert_called_once_with(cliente)
@@ -54,9 +49,7 @@ class TestClientService:
 
         with pytest.raises(Exception, match="Failed to save client"):
             self.service.register_client(
-                name="Empresa Teste",
-                email="contato@empresa.com",
-                cnpj="12345678901234"
+                name="Empresa Teste", email="contato@empresa.com", cnpj="12345678901234"
             )
 
     def test_register_client_does_not_send_email_on_save_failure(self):
@@ -64,9 +57,7 @@ class TestClientService:
 
         with pytest.raises(Exception):
             self.service.register_client(
-                name="Empresa Teste",
-                email="contato@empresa.com",
-                cnpj="12345678901234"
+                name="Empresa Teste", email="contato@empresa.com", cnpj="12345678901234"
             )
 
         self.mock_notification.send_welcome_email.assert_not_called()
@@ -76,9 +67,7 @@ class TestClientService:
 
         with pytest.raises(ValueError, match="Invalid email format"):
             self.service.register_client(
-                name="Empresa Teste",
-                email="invalid-email",
-                cnpj="12345678901234"
+                name="Empresa Teste", email="invalid-email", cnpj="12345678901234"
             )
 
     def test_register_client_validates_cnpj(self):
@@ -86,18 +75,14 @@ class TestClientService:
 
         with pytest.raises(ValueError, match="CNPJ deve conter 14 dígitos"):
             self.service.register_client(
-                name="Empresa Teste",
-                email="contato@empresa.com",
-                cnpj="123"
+                name="Empresa Teste", email="contato@empresa.com", cnpj="123"
             )
 
     def test_register_client_accepts_formatted_cnpj(self):
         self.mock_repository.save.return_value = True
 
         cliente = self.service.register_client(
-            name="Empresa Teste",
-            email="contato@empresa.com",
-            cnpj="12.345.678/9012-34"
+            name="Empresa Teste", email="contato@empresa.com", cnpj="12.345.678/9012-34"
         )
 
         assert cliente.cnpj == "12345678901234"
@@ -106,9 +91,7 @@ class TestClientService:
         self.mock_repository.save.return_value = True
 
         cliente = self.service.register_client(
-            name="  Empresa Teste  ",
-            email="contato@empresa.com",
-            cnpj="12345678901234"
+            name="  Empresa Teste  ", email="contato@empresa.com", cnpj="12345678901234"
         )
 
         assert cliente.nome == "Empresa Teste"
@@ -117,9 +100,7 @@ class TestClientService:
         self.mock_repository.save.return_value = True
 
         cliente = self.service.register_client(
-            name="Empresa Teste",
-            email="  contato@empresa.com  ",
-            cnpj="12345678901234"
+            name="Empresa Teste", email="  contato@empresa.com  ", cnpj="12345678901234"
         )
 
         assert cliente.email == "contato@empresa.com"
@@ -128,9 +109,7 @@ class TestClientService:
         self.mock_repository.save.return_value = True
 
         result = self.service.register_client(
-            name="Empresa Teste",
-            email="contato@empresa.com",
-            cnpj="12345678901234"
+            name="Empresa Teste", email="contato@empresa.com", cnpj="12345678901234"
         )
 
         assert isinstance(result, Cliente)
@@ -139,15 +118,11 @@ class TestClientService:
         self.mock_repository.save.return_value = True
 
         cliente1 = self.service.register_client(
-            name="Empresa 1",
-            email="empresa1@test.com",
-            cnpj="12345678901234"
+            name="Empresa 1", email="empresa1@test.com", cnpj="12345678901234"
         )
 
         cliente2 = self.service.register_client(
-            name="Empresa 2",
-            email="empresa2@test.com",
-            cnpj="98765432109876"
+            name="Empresa 2", email="empresa2@test.com", cnpj="98765432109876"
         )
 
         assert cliente1.id != cliente2.id
@@ -163,24 +138,23 @@ class TestClientService:
 
         for email in valid_emails:
             cliente = self.service.register_client(
-                name="Empresa",
-                email=email,
-                cnpj="12345678901234"
+                name="Empresa", email=email, cnpj="12345678901234"
             )
             assert cliente.email == email
 
-    @pytest.mark.parametrize("invalid_email", [
-        "plaintext",
-        "@example.com",
-        "user@",
-        "user name@example.com",
-    ])
+    @pytest.mark.parametrize(
+        "invalid_email",
+        [
+            "plaintext",
+            "@example.com",
+            "user@",
+            "user name@example.com",
+        ],
+    )
     def test_register_client_rejects_invalid_emails(self, invalid_email):
         self.mock_repository.save.return_value = True
 
         with pytest.raises(ValueError):
             self.service.register_client(
-                name="Empresa",
-                email=invalid_email,
-                cnpj="12345678901234"
+                name="Empresa", email=invalid_email, cnpj="12345678901234"
             )
