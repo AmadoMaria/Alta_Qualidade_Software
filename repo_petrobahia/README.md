@@ -27,9 +27,6 @@ repo_petrobahia/
 │   │   │   ├── pedido.py                    # Pedido com validação de quantidade
 │   │   │   ├── produto.py                   # Produto e TipoProduto enum
 │   │   │   └── cupom.py                     # Cupons enum (MEGA10, NOVO5, LUB2)
-│   │   ├── value_objects/                   # Objetos de valor
-│   │   │   ├── email.py                     # Email com regex validation
-│   │   │   └── cnpj.py                      # CNPJ com formatação
 │   │   └── services/                        # Serviços de domínio
 │   │       ├── pricing_service.py           # Cálculo de preços + descontos volume
 │   │       ├── discount_service.py          # Aplicação de cupons
@@ -87,10 +84,9 @@ Cada classe tem uma única responsabilidade:
 - `PricingService`: calcula apenas preços base com descontos por volume
 - `DiscountService`: aplica apenas descontos de cupons
 - `RoundingService`: arredonda apenas valores finais (diesel=0, outros=2 decimais)
-- `Email`: valida apenas emails com regex
-- `CNPJ`: valida e formata apenas CNPJs
 - `ClientService`: orquestra apenas registro de clientes
 - `PedidoService`: orquestra apenas processamento de pedidos
+- `Cliente`: entidade com validação de Email/CNPJ integrada
 
 ### **O - Open/Closed Principle**
 
@@ -131,20 +127,22 @@ Dependências apontam para abstrações:
 ### **Repository Pattern**
 - Abstração da camada de persistência através de `Ports`
 - Implementações em `Adapters` (JSON atual, SQL futuro)
-
-### **Value Object Pattern**
-- `Email`: validação e encapsulamento de emails
-- `CNPJ`: validação e formatação de CNPJ (remove caracteres especiais)
+- Separação entre interface e implementação
 
 ### **Use Case Pattern**
 - Casos de uso isolados e testáveis
 - Orquestração de serviços de domínio com tratamento de erros
+- Workflow completo de registro e processamento
 
 ### **Strategy Pattern (implícito)**
 - `PricingService`: diferentes estratégias de desconto por tipo de produto
 - Diesel: desconto progressivo por volume (>500: 5%, >1000: 10%)
 - Gasolina: desconto fixo R$100 se quantidade >200
 - Etanol: desconto 3% se quantidade >80
+
+### **Service Layer Pattern**
+- Lógica de negócio concentrada em serviços de domínio
+- Separação entre orchestração (ClientService, PedidoService) e cálculos (PricingService, DiscountService, RoundingService)
 
 ---
 
@@ -311,11 +309,11 @@ poetry run pre-commit run --all-files
 
 - ✅ Type hints em todas as funções
 - ✅ Pydantic BaseModel para entidades imutáveis (`frozen=True`)
-- ✅ Dataclasses para value objects imutáveis
+- ✅ Validações integradas nas entidades (email, CNPJ)
 - ✅ Separação clara de responsabilidades
 - ✅ Zero código duplicado
 - ✅ Nenhuma lógica de negócio nos adapters
-- ✅ **95%+ cobertura de testes**
+- ✅ **Testes focados em serviços de domínio**
 
 ---
 
