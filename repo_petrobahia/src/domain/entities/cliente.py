@@ -1,7 +1,8 @@
-from pydantic import BaseModel, Field, field_validator
-from typing import ClassVar
 import re
+from typing import ClassVar
 from uuid import uuid4
+
+from pydantic import BaseModel, Field, field_validator
 
 
 class Cliente(BaseModel):

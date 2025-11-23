@@ -19,7 +19,10 @@ class DiscountService:
         for cupom_enum in Cupom:
             cupom_data = cupom_enum.value
             if cupom_data.codigo == cupom_upper:
-                if cupom_data.produto_restrito and cupom_data.produto_restrito != tipo_produto:
+                if (
+                    cupom_data.produto_restrito
+                    and cupom_data.produto_restrito != tipo_produto
+                ):
                     return price
 
                 if cupom_data.tipo_desconto == "percentual":
