@@ -178,21 +178,45 @@ O projeto possui **~95%+ de cobertura de testes** com **17 arquivos de teste**:
 ### Executar Testes
 
 ```bash
-# Todos os testes com cobertura
-python -m pytest tests/ --cov=src --cov-report=term-missing --cov-report=html -v
+# Todos os testes com cobertura e relatórios HTML
+python -m pytest tests/ --cov=src --cov-report=term-missing --cov-report=html --html=reports/test_report.html --self-contained-html -v
+
+# Apenas testes (sem cobertura)
+python -m pytest tests/ -v
 
 # Testes específicos
 python -m pytest tests/unit/domain/services/test_pricing_service.py -v
 
-# Ver relatório HTML de cobertura
-# Abra: htmlcov/index.html
+# Executar testes em modo silencioso
+python -m pytest tests/ -q
+
+# Parar no primeiro erro
+python -m pytest tests/ -x
 ```
+
+### Relatórios Gerados
+
+Após executar os testes, os seguintes relatórios são gerados:
+
+1. **Relatório HTML de Testes** (`reports/test_report.html`)
+   - Visão detalhada de todos os testes executados
+   - Status de cada teste (PASSED/FAILED)
+   - Tempo de execução
+   - Informações do ambiente
+   - Abrir: `reports/test_report.html` no navegador
+
+2. **Relatório HTML de Cobertura** (`htmlcov/index.html`)
+   - Percentual de cobertura por arquivo
+   - Linhas cobertas e não cobertas
+   - Navegação interativa pelo código
+   - Abrir: `htmlcov/index.html` no navegador
 
 ### Tecnologias de Teste
 
 - **pytest**: Framework de testes
-- **pytest-cov**: Relatórios de cobertura
-- **pytest-mock / unittest.mock**: Mocking para isolamento
+- **pytest-cov**: Relatórios de cobertura de código
+- **pytest-html**: Relatórios HTML de execução de testes
+- **pytest-mock / unittest.mock**: Mocking para isolamento de testes
 - **conftest.py**: Fixtures compartilhadas (clientes, pedidos, mocks)
 
 ---
