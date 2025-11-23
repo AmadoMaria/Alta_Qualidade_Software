@@ -1,6 +1,6 @@
 # PetroBahia S.A. - Sistema de Processamento de Pedidos
 
-**PetroBahia S.A.** é uma empresa fictícia do setor de óleo e gás. Este projeto implementa um sistema para calcular preços de combustíveis, registrar clientes e processar pedidos com arquitetura limpa e cobertura completa de testes.
+**PetroBahia S.A.** é uma empresa fictícia do setor de óleo e gás. Este projeto implementa um sistema para calcular preços de combustíveis, registrar clientes e processar pedidos com arquitetura limpa e testes focados nos serviços de domínio.
 
 ## 🎯 Objetivos do Projeto
 
@@ -10,7 +10,7 @@ Este é um projeto acadêmico de **Qualidade de Software** focado em:
 - Implementar **Hexagonal Architecture** (Ports & Adapters)
 - Aplicar **Clean Code** e **PEP8**
 - Melhorar legibilidade, manutenibilidade e testabilidade
-- **Cobertura de testes de ~95%+** com pytest
+- **Testes focados em serviços de domínio** (lógica de negócio)
 
 ---
 
@@ -56,17 +56,16 @@ repo_petrobahia/
 │   │
 │   └── main.py                              # Ponto de entrada
 │
-├── tests/                                   # Testes automatizados (17 arquivos)
+├── tests/                                   # Testes automatizados (5 arquivos)
 │   ├── conftest.py                          # Fixtures compartilhadas
 │   └── unit/
-│       ├── domain/
-│       │   ├── entities/                    # Testes entidades (4 arquivos)
-│       │   ├── value_objects/               # Testes value objects (2 arquivos)
-│       │   └── services/                    # Testes serviços (5 arquivos)
-│       └── adapters/
-│           ├── repositories/                # Testes repositórios (2 arquivos)
-│           ├── use_cases/                   # Testes use cases (2 arquivos)
-│           └── notifications/               # Testes notificações (1 arquivo)
+│       └── domain/
+│           └── services/                    # Testes serviços (5 arquivos)
+│               ├── test_pricing_service.py
+│               ├── test_discount_service.py
+│               ├── test_rounding_service.py
+│               ├── test_client_service.py
+│               └── test_pedido_service.py
 │
 ├── data/                                    # Armazenamento JSON
 │   ├── clientes.json
@@ -151,29 +150,50 @@ Dependências apontam para abstrações:
 
 ## 🧪 Testes Automatizados
 
-### Cobertura Completa
+### Foco em Serviços de Domínio
 
-O projeto possui **~95%+ de cobertura de testes** com **17 arquivos de teste**:
+O projeto possui testes focados nos **serviços de domínio** (camada de lógica de negócio):
 
-#### Domain Layer
-- ✅ `test_cliente.py` - 20+ testes de validação Email/CNPJ
-- ✅ `test_pedido.py` - 15+ testes de validação quantidade/IDs
-- ✅ `test_produto.py` - 15+ testes enum e validação preço
-- ✅ `test_cupom.py` - 15+ testes enum cupons e restrições
-- ✅ `test_email.py` - 25+ testes validação regex
-- ✅ `test_cnpj.py` - 25+ testes validação e formatação
-- ✅ `test_pricing_service.py` - 20+ testes cálculo preços e descontos volume
-- ✅ `test_discount_service.py` - 25+ testes aplicação cupons
-- ✅ `test_rounding_service.py` - 25+ testes arredondamento por tipo
-- ✅ `test_client_service.py` - 15+ testes registro clientes
-- ✅ `test_pedido_service.py` - 20+ testes orquestração completa
+#### Services Testados (5 arquivos)
+- ✅ `test_pricing_service.py` - 20+ testes de cálculo de preços e descontos por volume
+- ✅ `test_discount_service.py` - 25+ testes de aplicação de cupons de desconto
+- ✅ `test_rounding_service.py` - 25+ testes de arredondamento por tipo de produto
+- ✅ `test_client_service.py` - 15+ testes de registro de clientes
+- ✅ `test_pedido_service.py` - 20+ testes de orquestração completa de pedidos
 
-#### Adapter Layer
-- ✅ `test_json_cliente_repository.py` - 20+ testes persistência JSON
-- ✅ `test_json_pedido_repository.py` - 20+ testes persistência JSON
-- ✅ `test_register_cliente_use_case.py` - 15+ testes workflow registro
-- ✅ `test_process_pedido_use_case.py` - 20+ testes workflow pedidos
-- ✅ `test_console_notification.py` - 15+ testes notificações console
+### O que é testado
+
+**PricingService**:
+- Cálculo de preço base × quantidade
+- Descontos progressivos por volume (diesel: >500: 5%, >1000: 10%)
+- Descontos por quantidade (gasolina: >200: R$100, etanol: >80: 3%)
+- Validação de quantidade positiva
+- Tratamento de produtos inválidos
+
+**DiscountService**:
+- Aplicação de cupons percentuais (MEGA10: 10%, NOVO5: 5%)
+- Aplicação de cupons fixos (LUB2: R$2)
+- Restrições por produto (LUB2 apenas para lubrificante)
+- Case-insensitive para códigos de cupom
+- Cupons inválidos retornam preço original
+
+**RoundingService**:
+- Diesel: arredonda para 0 casas decimais (inteiro)
+- Outros produtos: arredondam para 2 casas decimais
+- Tratamento de valores positivos e negativos
+
+**ClientService**:
+- Registro de clientes com validação Email/CNPJ
+- Integração com repositório (mocked)
+- Envio de notificação de boas-vindas
+- Tratamento de falhas de persistência
+
+**PedidoService**:
+- Pipeline completo: pricing → discount → rounding
+- Validação de cliente existente
+- Validação de quantidade positiva
+- Combinação de descontos (volume + cupom)
+- Persistência de pedidos
 
 ### Executar Testes
 
@@ -398,10 +418,12 @@ Preço Final
 - Dependências invertidas
 
 ### **Testabilidade**
-- **~95%+ cobertura de testes**
-- Mocks para isolamento
-- Fixtures reutilizáveis
-- Testes de unidade, integração e edge cases
+- **Testes focados em serviços de domínio** (lógica de negócio crítica)
+- Mocks para isolamento de dependências externas
+- Fixtures reutilizáveis em conftest.py
+- Testes de unidade para regras de negócio
+- Cobertura de casos de sucesso e edge cases
+- Relatórios HTML com pytest-html
 
 ---
 
