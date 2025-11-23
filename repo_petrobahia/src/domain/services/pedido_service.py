@@ -21,7 +21,6 @@ class PedidoService:
 
     def process_pedido(
         self,
-        id: str,
         cliente_id: str,
         tipo_produto: TipoProduto,
         quantidade: int,
@@ -35,7 +34,6 @@ class PedidoService:
             raise ValueError("Quantity must be positive")
 
         pedido = Pedido(
-            id=id,
             cliente_id=cliente_id,
             tipo_produto=tipo_produto,
             quantidade=quantidade,

@@ -1,12 +1,13 @@
 from typing import Optional
+from uuid import uuid4
 
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, Field, field_validator
 
 from domain.entities.produto import TipoProduto
 
 
 class Pedido(BaseModel):
-    id: str
+    id: str = Field(default_factory=lambda: str(uuid4()))
     cliente_id: str
     tipo_produto: TipoProduto
     quantidade: int

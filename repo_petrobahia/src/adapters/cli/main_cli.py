@@ -74,28 +74,24 @@ class PetroBahiaCLI:
 
         pedidos_data = [
             {
-                "id": "ORD001",
                 "cliente_id": registered_clientes[0].id,
                 "tipo_produto": "diesel",
                 "quantidade": 1200,
                 "cupom": Cupom.MEGA10.value.codigo,
             },
             {
-                "id": "ORD002",
                 "cliente_id": registered_clientes[1].id,
                 "tipo_produto": "gasolina",
                 "quantidade": 300,
                 "cupom": None,
             },
             {
-                "id": "ORD003",
                 "cliente_id": registered_clientes[2].id,
                 "tipo_produto": "etanol",
                 "quantidade": 50,
                 "cupom": Cupom.NOVO5.value.codigo,
             },
             {
-                "id": "ORD004",
                 "cliente_id": registered_clientes[3].id,
                 "tipo_produto": "lubrificante",
                 "quantidade": 12,
@@ -106,7 +102,6 @@ class PetroBahiaCLI:
         totals = []
         for pedido_data in pedidos_data:
             request = ProcessPedidoRequest(
-                id=pedido_data["id"],
                 cliente_id=pedido_data["cliente_id"],
                 tipo_produto=pedido_data["tipo_produto"],
                 quantidade=pedido_data["quantidade"],
@@ -115,18 +110,17 @@ class PetroBahiaCLI:
             response = self._process_pedido_use_case.execute(request)
 
             if response.success:
+                pedido = response.pedido
                 totals.append(response.total)
-                cupom_text = (
-                    f" (Coupon: {pedido_data['cupom']})" if pedido_data["cupom"] else ""
-                )
+                cupom_text = f" (Coupon: {pedido.cupom})" if pedido.cupom else ""
                 print(
-                    f"✓ Order {pedido_data['id']}: "
-                    f"{pedido_data['tipo_produto'].capitalize()} "
-                    f"x{pedido_data['quantidade']}{cupom_text} "
+                    f"✓ Order {pedido.id}: "
+                    f"{pedido.tipo_produto.value.capitalize()} "
+                    f"x{pedido.quantidade}{cupom_text} "
                     f"= R$ {response.total}"
                 )
             else:
-                print(f"✗ Order {pedido_data['id']} failed: {response.message}")
+                print(f"✗ Order {pedido_data} failed: {response.message}")
 
         print()
         print("-" * 60)

@@ -10,7 +10,6 @@ from ports.pedido_repository_port import PedidoRepositoryPort
 
 @dataclass
 class ProcessPedidoRequest:
-    id: str
     cliente_id: str
     tipo_produto: str
     quantidade: int
@@ -44,7 +43,6 @@ class ProcessPedidoUseCase:
 
         try:
             pedido, final_price = self._pedido_service.process_pedido(
-                request.id,
                 request.cliente_id,
                 tipo_produto,
                 request.quantidade,
@@ -61,7 +59,7 @@ class ProcessPedidoUseCase:
                 success=False,
                 message=str(e),
             )
-        except Exception as e:
+        except Exception:
             return ProcessPedidoResponse(
                 success=False,
                 message="Failed to process order",
