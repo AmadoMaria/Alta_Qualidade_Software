@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from typing import Optional
 
 from domain.entities.cliente import Cliente
-from domain.value_objects import CNPJ, Email
 from domain.services.client_service import ClientService
 from ports.cliente_repository_port import ClienteRepositoryPort
 from ports.notification_port import NotificationPort
@@ -40,7 +39,7 @@ class RegisterClienteUseCase:
                 message="Customer registered successfully",
                 cliente=cliente,
             )
-        except ValueError as e:
+        except ValueError:
             # TODO: Add custom error code to response
             return RegisterClienteResponse(
                 success=False,

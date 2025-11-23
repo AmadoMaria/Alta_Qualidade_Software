@@ -1,6 +1,5 @@
-from ports.cliente_repository_port import ClienteRepositoryPort
-from domain.value_objects import CNPJ, Email
 from domain.entities.cliente import Cliente
+from ports.cliente_repository_port import ClienteRepositoryPort
 from ports.notification_port import NotificationPort
 
 

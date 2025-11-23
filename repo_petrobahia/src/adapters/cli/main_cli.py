@@ -1,7 +1,5 @@
 from adapters.notifications.console_notification import ConsoleNotification
-from adapters.repositories.json_cliente_repository import (
-    JsonClienteRepository,
-)
+from adapters.repositories.json_cliente_repository import JsonClienteRepository
 from adapters.repositories.json_pedido_repository import JsonPedidoRepository
 from adapters.use_cases import (
     ProcessPedidoRequest,

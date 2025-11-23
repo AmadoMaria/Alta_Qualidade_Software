@@ -1,1 +1,30 @@
-[]
+[
+  {
+    "id": "ORD001",
+    "cliente_id": "c3927e36-b700-49c5-b9b9-d266ff10d9fd",
+    "tipo_produto": "diesel",
+    "quantidade": 1200,
+    "cupom": "MEGA10"
+  },
+  {
+    "id": "ORD002",
+    "cliente_id": "972dd816-018c-4aa0-87fd-4d30929b10fe",
+    "tipo_produto": "gasolina",
+    "quantidade": 300,
+    "cupom": null
+  },
+  {
+    "id": "ORD003",
+    "cliente_id": "b357485e-6453-4abf-8a61-dbbb353c3c45",
+    "tipo_produto": "etanol",
+    "quantidade": 50,
+    "cupom": "NOVO5"
+  },
+  {
+    "id": "ORD004",
+    "cliente_id": "744d6c68-3a31-4707-b025-3e8b8cc03261",
+    "tipo_produto": "lubrificante",
+    "quantidade": 12,
+    "cupom": "LUB2"
+  }
+]

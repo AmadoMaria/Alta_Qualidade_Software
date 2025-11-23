@@ -17,6 +17,7 @@ repos:
       - id: isort
 
   - repo: https://github.com/pycqa/flake8
-    rev: 6.1.0
+    rev: 6.0.0
     hooks:
       - id: flake8
+        args: ["--config=repo_petrobahia/.flake8"]
